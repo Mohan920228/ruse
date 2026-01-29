@@ -18,16 +18,12 @@ jobs:
           key: npm-deps-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
-      - name: Run server
-        run: npm start & npx wait-on http://127.0.0.1:XYZ
-      - name: Run tests
-        run: npm test
-      - name: Output information
-        run: echo "..."
+      - name: upload artifacts
+        uses: actions/upload-artifacts@v4
+        with:
+          artifact-name: package
+          path: dist
+      
   deploy:
     needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Output information
-        run: |        
-          echo "..."
+    uses: ./.github/workflows/reuse.yml

@@ -1,0 +1,11 @@
+name: reuse workflow
+on: workflow_call
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+        - name: download artifact
+          uses: actions/download-artifacts@v4
+          with:
+            artifact-name: package
+            path: dist
