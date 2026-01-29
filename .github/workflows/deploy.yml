@@ -24,3 +24,9 @@ jobs:
   deploy:
     needs: test
     uses: ./.github/workflows/reuse.yml
+  print:
+    needs: deploy
+    runs-on: ubunut-latest
+    steps:
+      - name: printing output
+        run : echo ${{ needs.deploy.outputs.printout }}

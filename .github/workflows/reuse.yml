@@ -1,11 +1,20 @@
 name: reuse workflow
-on: workflow_call
+on: 
+    workflow_call:
+        outputs:
+          printout:
+            value: ${{ jobs.deploy.outputs.set-outcome }}
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    outputs: 
+        set-outcome: ${{ steps.outcome.outputs.set-out }}
     steps:
         - name: download artifact
           uses: actions/download-artifact@v4
           with:
             artifact-name: package
             path: dist
+        - name: print output
+          id: outcome
+          run: echo "set-out=This is my message" >> $GITHUB_OUTPUT
